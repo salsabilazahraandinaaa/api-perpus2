@@ -1,7 +1,12 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\AuthC;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
+use App\Http\Controllers\PeminjamanC;
+use App\Http\Controllers\BukuC;
+use App\Http\Controllers\usersC;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +19,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::get('/about', function(){
+    return 'Salsabila Dan Novaliza';
+});
+
+Route::apiResource('/buku', BukuC::class);
+Route::apiResource('/peminjaman', PeminjamanC::class) -> middleware(['auth:sanctum']);
+Route::apiResource('/users', usersC::class);
+
+route::post('/login',[AuthC::class,'login']);
+
+route::get('/kasir',function(){
+    return Hash::make('kasir');
 });
